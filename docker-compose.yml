@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+    prometheus:
+        image: prom/prometheus
+        privileged: true
+        volumes:
+            - ./confs/prometheus.yml:/etc/prometheus/prometheus.yml
+            - ./confs/alert.rules.yml:/etc/prometheus/alert.rules.yml
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+        ports:
+            - '9090:9090'
+
+    alertmanager:
+        image: quay.io/prometheus/alertmanager
+        privileged: true
+        volumes:
+            - ./confs/alertmanager.yml:/alertmanager.yml
+        command:
+            - '--config.file=/alertmanager.yml'
+        ports:
+            - '9093:9093'
+    grafana:
+        image: grafana/grafana-enterprise
+        privileged: true
+        ports:
+            - '3000:3000'
+        volumes:
+            - grafana-storage:/var/lib/grafana
+
+    promteams:
+        image: bzon/prometheus-msteams
+        privileged: true
+        environment:
+            - TEAMS_INCOMING_WEBHOOK_URL=webhookurl #Change this part with webhook url
+            - TEAMS_REQUEST_URI=alertmanager
+        ports:
+            - '2000:2000'
+
+
+volumes:
+  grafana-storage:
