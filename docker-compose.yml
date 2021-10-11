@@ -23,6 +23,7 @@ services:
             - '--config.file=/alertmanager.yml'
         ports:
             - '9093:9093'
+
     grafana:
         image: grafana/grafana-enterprise
         privileged: true
@@ -31,6 +32,7 @@ services:
             - '3000:3000'
         volumes:
             - grafana-storage:/var/lib/grafana
+
 
     promteams:
         image: bzon/prometheus-msteams
