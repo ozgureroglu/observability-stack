@@ -14,8 +14,9 @@ scrape_configs:
         - targets: ['localhost:9090']
 
     - job_name: 'node_exporter'
-      scrape_interval: 5s
+      scrape_interval: 10s
       static_configs:
+# Add all ip addresses that you will watch with node-exporter
         - targets:
           #- 192.168.3.101:9100
           #- 192.168.3.102:9100
@@ -23,13 +24,18 @@ scrape_configs:
           - 192.168.3.104:9100
 
     - job_name: 'kube-state-metrics'
-      scrape_interval: 10s
+      scrape_interval: 30s
       static_configs:
         - targets: ['192.168.3.101:30080']
+
+    - job_name: 'kube-state-metrics_phoenix'
+      scrape_interval: 30s
+      static_configs:
+        - targets: ['192.168.1.60:30000']
 
 # Alerting specifies settings related to the Alertmanager
 alerting:
     alertmanagers:
         - static_configs:
           - targets: 
-            - localhost:9093
+            - 192.168.3.105:9093

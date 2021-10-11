@@ -4,6 +4,7 @@ services:
     prometheus:
         image: prom/prometheus
         privileged: true
+        restart: unless-stopped
         volumes:
             - ./confs/prometheus.yml:/etc/prometheus/prometheus.yml
             - ./confs/alert.rules.yml:/etc/prometheus/alert.rules.yml
@@ -13,8 +14,9 @@ services:
             - '9090:9090'
 
     alertmanager:
-        image: quay.io/prometheus/alertmanager
+        image: prom/alertmanager
         privileged: true
+        restart: unless-stopped
         volumes:
             - ./confs/alertmanager.yml:/alertmanager.yml
         command:
@@ -24,6 +26,7 @@ services:
     grafana:
         image: grafana/grafana-enterprise
         privileged: true
+        restart: unless-stopped
         ports:
             - '3000:3000'
         volumes:
