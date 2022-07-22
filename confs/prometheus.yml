@@ -13,6 +13,7 @@ scrape_configs:
       static_configs:
         - targets: ['localhost:9090']
 
+    # Node-exporter scraper
     - job_name: 'node_exporter'
       scrape_interval: 10s
       static_configs:
@@ -23,6 +24,8 @@ scrape_configs:
           #- 192.168.3.103:9100
           - 192.168.3.104:9100
 
+
+    # Kubestate metrics scraper: there should be kube-state-metrics installation on the target cluster
     - job_name: 'kube-state-metrics'
       scrape_interval: 30s
       static_configs:
@@ -32,6 +35,13 @@ scrape_configs:
       scrape_interval: 30s
       static_configs:
         - targets: ['192.168.1.60:30000']
+
+    # OpenTelemetry collector scraper
+    - job_name: 'otel-collector'
+      scrape_interval: 10s
+      static_configs:
+        - targets: ['otel-collector:8889']
+        - targets: ['otel-collector:8888']        
 
 # Alerting specifies settings related to the Alertmanager
 alerting:
