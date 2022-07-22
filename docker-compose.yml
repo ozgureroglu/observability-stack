@@ -4,6 +4,7 @@ services:
     # Prometheus Installation
     prometheus:
         image: prom/prometheus
+        container_name: prometheus
         privileged: true
         restart: unless-stopped
         volumes:
@@ -16,6 +17,7 @@ services:
 
     alertmanager:
         image: prom/alertmanager
+        container_name: alertmanager
         privileged: true
         restart: unless-stopped
         volumes:
@@ -27,6 +29,7 @@ services:
 
     grafana:
         image: grafana/grafana-enterprise
+        container_name: grafana
         privileged: true
         restart: unless-stopped
         ports:
@@ -37,6 +40,7 @@ services:
 
     promteams:
         image: bzon/prometheus-msteams
+        container_name: promteams
         privileged: true
         environment:
             - TEAMS_INCOMING_WEBHOOK_URL=webhookurl #Change this part with webhook url
@@ -47,6 +51,7 @@ services:
     # Jaeger Installation
     jaeger-all-in-one:
         image: jaegertracing/all-in-one:latest
+        container_name: jaeger
         ports:
         - "16686:16686"
         - "14268"
@@ -62,6 +67,7 @@ services:
     # Collector
     otel-collector:
         image: ${OTELCOL_IMG}
+        container_name: otel-collector
         command: ["--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}"]
         volumes:
         - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
@@ -82,6 +88,7 @@ services:
           dockerfile: Dockerfile
           context: ./demo/client
         image: demo-client
+        container_name: obs-demo-client
         environment:
         - OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4317
         - DEMO_SERVER_ENDPOINT=http://demo-server:7080/hello
@@ -94,6 +101,7 @@ services:
           dockerfile: Dockerfile
           context: ./demo/server
         image: demo-server
+        container_name: obs-demo-server
         environment:
         - OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4317
         ports:
