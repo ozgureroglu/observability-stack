@@ -91,7 +91,7 @@ services:
     demo-server:
         build:
           dockerfile: Dockerfile
-          context: ./dmo/server
+          context: ./demo/server
         environment:
         - OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4317
         ports:
