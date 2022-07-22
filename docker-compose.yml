@@ -61,7 +61,7 @@ services:
 
     # Collector
     otel-collector:
-        image: otel-col-img
+        image: ${OTELCOL_IMG}
         command: ["--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}"]
         volumes:
         - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
