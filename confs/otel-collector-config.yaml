@@ -2,6 +2,11 @@ receivers:
   otlp:
     protocols:
       grpc:
+      http:
+        cors:
+          allowed_origins:
+            - "http://*"
+            - "https://*"
 
 exporters:
   prometheus:
@@ -16,7 +21,7 @@ exporters:
     format: proto
 
   jaeger:
-    endpoint: jaeger:14268
+    endpoint: jaeger:14250
     tls:
       insecure: true
 
