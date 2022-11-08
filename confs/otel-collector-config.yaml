@@ -16,7 +16,7 @@ exporters:
     format: proto
 
   jaeger:
-    endpoint: jaeger:49157
+    endpoint: jaeger:14268
     tls:
       insecure: true
 
